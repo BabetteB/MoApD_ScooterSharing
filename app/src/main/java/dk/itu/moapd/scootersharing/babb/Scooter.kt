@@ -18,6 +18,16 @@ class Scooter {
         this.name = name
     }
 
-    fun
+    fun getLocation() : String {
+        return this.location
+    }
+
+    fun setLocation(location : String) {
+        this.location = location
+    }
+
+    override fun toString(): String {
+        return "[Scooter] $name is placed at $location"
+    }
 
 }

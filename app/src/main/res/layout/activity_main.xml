@@ -10,12 +10,11 @@
     <!-- SCOOTER NAME -->
     <LinearLayout
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="5dp">
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/text_view_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Name:"/>
@@ -23,26 +22,28 @@
 
         <EditText
             android:id="@+id/edit_text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Gunner007..."/>
     </LinearLayout>
 
     <!-- LOCATION -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
         <TextView
-            android:id="@+id/text_view_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location:"/>
 
         <EditText
             android:id="@+id/edit_text_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="din mor..."/>
     </LinearLayout>
 
     <View
