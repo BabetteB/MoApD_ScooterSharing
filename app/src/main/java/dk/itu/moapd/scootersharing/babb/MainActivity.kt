@@ -7,14 +7,15 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.WindowCompat
+import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    // Binding(s)
+    private lateinit var mainBinding : ActivityMainBinding
+
     // GUI vars
-    private lateinit var scooterName: EditText
-    private lateinit var scooterLocation: EditText
     private val scooter: Scooter = Scooter("", "")
-    private lateinit var buttonStartRide: Button
 
     // set of private constants used in this class
     companion object {
@@ -24,24 +25,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
-        scooterName = findViewById(R.id.edit_text_name)
-        scooterLocation = findViewById(R.id.edit_text_location)
-        buttonStartRide = findViewById(R.id.button_start_ride)
-        buttonStartRide.setOnClickListener{
-            if (scooterName.text.isNotEmpty() && scooterLocation.text.isNotEmpty())
-            {
-                val name = scooterName.text.toString().trim()
-                scooter.name = name
+        with (mainBinding) {
+            inputStartRideLayout.buttonStartRide.setOnClickListener {
+                if (inputStartRideLayout.nameInput.text.isNotEmpty() && inputStartRideLayout.locationInput.text.isNotEmpty()) {
+                    var name = inputStartRideLayout.nameInput.text.toString().trim()
+                    scooter.name = name
 
-                val location = scooterLocation.text.toString().trim()
-                scooter.location = location
+                    var location = inputStartRideLayout.locationInput.text.toString().trim()
+                    scooter.location = location
 
-                showMessage()
+                    showMessage()
+                }
             }
-
         }
+
+        setContentView(mainBinding.root)
     }
 
     private fun showMessage() {
