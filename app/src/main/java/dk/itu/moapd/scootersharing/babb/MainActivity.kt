@@ -33,10 +33,10 @@ class MainActivity : AppCompatActivity() {
             if (scooterName.text.isNotEmpty() && scooterLocation.text.isNotEmpty())
             {
                 val name = scooterName.text.toString().trim()
-                scooter.setName(name)
+                scooter.name = name
 
                 val location = scooterLocation.text.toString().trim()
-                scooter.setLocation(location)
+                scooter.location = location
 
                 showMessage()
             }
