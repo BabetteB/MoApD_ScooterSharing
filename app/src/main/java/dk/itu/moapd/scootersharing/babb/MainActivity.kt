@@ -29,6 +29,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.WindowCompat
+import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -58,6 +59,11 @@ class MainActivity : AppCompatActivity() {
                     var location = inputStartRideLayout.locationInput.text.toString().trim()
                     scooter.location = location
 
+                    Snackbar.make(
+                        mainBinding.root,
+                        scooter.toString(),
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                     showMessage()
                 }
             }
