@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.WindowCompat
+import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +23,9 @@ class MainActivity : AppCompatActivity() {
         private val TAG = MainActivity::class.qualifiedName
     }
 
+    /**
+     * Binds view when App is launched
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
@@ -36,6 +40,11 @@ class MainActivity : AppCompatActivity() {
                     var location = inputStartRideLayout.locationInput.text.toString().trim()
                     scooter.location = location
 
+                    Snackbar.make(
+                        mainBinding.snackbarAction,
+                        scooter.toString(),
+                        Snackbar.LENGTH_SHORT).show()
+
                     showMessage()
                 }
             }
@@ -44,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
     }
 
+    /**
+     * Logs the Scooter properties
+     */
     private fun showMessage() {
         Log.d(TAG, scooter.toString())
     }
