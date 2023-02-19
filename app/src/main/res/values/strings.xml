@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">ScooterSharing</string>
+
+    <string name="scooter_name">Name:</string>
+    <string name="scooter_name_input_hint">Gunner007...</string>
+    <string name="scooter_location">Location: </string>
+    <string name="scooter_location_input_hint">din mor...</string>
+
+    <string name="start_ride_button">Start Ride!</string>
+    <string name="update_ride_button">Update Ride!</string>
 </resources>

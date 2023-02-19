@@ -18,14 +18,14 @@
             android:id="@+id/name_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name:"/>
+            android:text="@string/scooter_name"/>
 
 
         <EditText
             android:id="@+id/name_input"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Gunner007..."/>
+            android:hint="@string/scooter_name_input_hint"/>
     </LinearLayout>
 
     <!-- LOCATION -->
@@ -41,13 +41,13 @@
             android:id="@+id/location_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location:"/>
+            android:text="@string/scooter_location"/>
 
         <EditText
             android:id="@+id/location_input"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="din mor..."/>
+            android:hint="@string/scooter_location_input_hint"/>
     </LinearLayout>
 
 
@@ -58,7 +58,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="20dp"
-        android:text="Start ride"
+        android:text="@string/start_ride_button"
         tools:ignore="MissingConstraints" />
 
 
