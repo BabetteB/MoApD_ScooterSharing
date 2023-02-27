@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:orientation="vertical">
 
-    <include
-        android:id="@+id/input_start_ride_layout"
-        layout="@layout/input_start_ride_layout"
+    <!-- SCOOTER NAME -->
+    <LinearLayout
+        android:id="@+id/name_layout"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:orientation="vertical"
         android:gravity="center"
+        android:layout_margin="10dp"
+        tools:ignore="MissingConstraints">
 
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:textSize="24dp"
+            android:text="@string/app_name"/>
+
+        <Button
+            android:id="@+id/button_start_ride"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="30dp"
+            app:icon="@drawable/start_arrow"
+            android:text="@string/start_ride_button"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/button_update_ride"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cornerRadius="30dp"
+            app:icon="@drawable/edit_pen"
+            android:text="@string/update_ride_button"
+            tools:ignore="MissingConstraints" />
 
 
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
