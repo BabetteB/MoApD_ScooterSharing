@@ -38,6 +38,11 @@ class RideListFragment : Fragment() {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
 
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val rides = ridesDB
+        val adapter = RideListAdapter(rides.getRidesList())
+        binding.rideRecyclerView.adapter = adapter
+
         return binding.root
     }
 

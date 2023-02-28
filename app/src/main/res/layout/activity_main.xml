@@ -6,5 +6,6 @@
     android:name="dk.itu.moapd.scootersharing.babb.RideListFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" />
+    tools:context=".MainActivity"
+    tools:layout="@layout/fragment_ride_list" />
 
