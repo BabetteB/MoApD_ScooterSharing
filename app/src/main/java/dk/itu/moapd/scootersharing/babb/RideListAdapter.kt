@@ -26,8 +26,8 @@ class RideListAdapter (private val rides: List<Scooter>)
     override fun onBindViewHolder(holder: RideHolder, position: Int) {
         val ride = rides[position]
         holder.apply {
-            binding.rideTitle.text = ride.name
-            binding.rideLocation.text = ride.location
+            binding.scooterName.text = ride.name
+            binding.scooterLocation.text = ride.location
         }
     }
     override fun getItemCount() = rides.size
