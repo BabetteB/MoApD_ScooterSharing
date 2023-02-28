@@ -24,6 +24,9 @@
  */
 package dk.itu.moapd.scootersharing.babb
 
+import java.io.Serializable
+import java.sql.Timestamp
+
 
 /**
  * Scooter.
@@ -34,4 +37,8 @@ package dk.itu.moapd.scootersharing.babb
  * @property location : String is the location of the Scooter.
  * @property createdAt : Long is the time in which the object is created. Defaults to 0
  */
-data class Scooter (var name : String, var location : String, var createdAt : Long = 0L )
+data class Scooter (
+    val name : String,
+    var location : String,
+    var createdAt : Long = 0L,
+    val timeStamp : Long = System.currentTimeMillis() ) : Serializable

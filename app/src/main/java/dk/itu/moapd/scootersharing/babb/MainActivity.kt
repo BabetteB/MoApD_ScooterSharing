@@ -22,23 +22,54 @@ SOFTWARE.*/
 
 package dk.itu.moapd.scootersharing.babb
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import androidx.core.view.WindowCompat
-import com.google.android.material.snackbar.Snackbar
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
 
     // Binding(s)
     private lateinit var mainBinding : ActivityMainBinding
+    private val scooterViewModel : ScooterViewModel by viewModels()
 
-    // GUI vars
-    private val scooter: Scooter = Scooter("", "")
+
+    private val updateRideLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            val newLocation =
+                result.data?.getStringExtra(EXTRA_UPDATE_SCOOTER_LOCATION) ?: "NaN"
+
+            scooterViewModel.updateLocation(newLocation)
+        }
+        Log.d(TAG, result.toString())
+        Log.d(TAG, scooterViewModel.scooterLocation)
+    }
+
+    private val startRideLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if(result.resultCode == Activity.RESULT_OK) {
+            Log.d(TAG, ("Scooter name before assign:" + result.data?.getStringExtra(EXTRA_START_SCOOTER_NAME)))
+
+            val newName =
+                result.data?.getStringExtra(EXTRA_START_SCOOTER_NAME) ?: "NaN"
+            val newLocation =
+                result.data?.getStringExtra(EXTRA_START_SCOOTER_LOCATION) ?: "NaN"
+
+            scooterViewModel.updateLocation(newLocation)
+        }
+        Log.d(TAG, result.toString())
+        Log.d(TAG, ("Scooter name:" + scooterViewModel.scooterName))
+    }
 
     // set of private constants used in this class
     companion object {
@@ -48,31 +79,27 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         //WindowCompat.setDecorFitsSystemWindows(window, false)
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "created ScooterViewModel: $scooterViewModel")
+
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         with (mainBinding) {
-            inputStartRideLayout.buttonStartRide.setOnClickListener {
-                if (inputStartRideLayout.nameInput.text.isNotEmpty() && inputStartRideLayout.locationInput.text.isNotEmpty()) {
-                    var name = inputStartRideLayout.nameInput.text.toString().trim()
-                    scooter.name = name
-
-                    var location = inputStartRideLayout.locationInput.text.toString().trim()
-                    scooter.location = location
-
-                    Snackbar.make(
-                        mainBinding.root,
-                        scooter.toString(),
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                    showMessage()
-                }
+            /*buttonStartRide.setOnClickListener {
+                val intent = Intent(this@MainActivity, StartRideActivity::class.java)
+                //val intent = StartRideActivity.newIntent(this@MainActivity, scooterViewModel.currentScooter.name, scooterViewModel.currentScooter.location)
+                startRideLauncher.launch(intent)
             }
+
+            buttonUpdateRide.setOnClickListener {
+                val intent = UpdateRideActivity.newIntent(this@MainActivity, scooterViewModel.scooterName)
+                updateRideLauncher.launch(intent)
+            }*/
         }
 
         setContentView(mainBinding.root)
     }
 
     private fun showMessage() {
-        Log.d(TAG, scooter.toString())
+        Log.d(TAG, scooterViewModel.scooterString())
     }
 }
