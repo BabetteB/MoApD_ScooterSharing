@@ -45,22 +45,30 @@ class MainActivity : AppCompatActivity() {
     ) {
         result ->
         if(result.resultCode == Activity.RESULT_OK) {
-            scooterViewModel.currentScooter.location =
+            val newLocation =
                 result.data?.getStringExtra(EXTRA_UPDATE_SCOOTER_LOCATION) ?: "NaN"
+
+            scooterViewModel.updateLocation(newLocation)
         }
         Log.d(TAG, result.toString())
+        Log.d(TAG, scooterViewModel.scooterLocation)
     }
 
     private val startRideLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if(result.resultCode == Activity.RESULT_OK) {
-            scooterViewModel.currentScooter.name =
+            Log.d(TAG, ("Scooter name before assign:" + result.data?.getStringExtra(EXTRA_START_SCOOTER_NAME)))
+
+            val newName =
                 result.data?.getStringExtra(EXTRA_START_SCOOTER_NAME) ?: "NaN"
-            scooterViewModel.currentScooter.location =
+            val newLocation =
                 result.data?.getStringExtra(EXTRA_START_SCOOTER_LOCATION) ?: "NaN"
+
+            scooterViewModel.updateLocation(newLocation)
         }
         Log.d(TAG, result.toString())
+        Log.d(TAG, ("Scooter name:" + scooterViewModel.scooterName))
     }
 
     // set of private constants used in this class
@@ -76,21 +84,22 @@ class MainActivity : AppCompatActivity() {
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
         with (mainBinding) {
-            buttonStartRide.setOnClickListener {
-                val intent = StartRideActivity.newIntent(this@MainActivity, scooterViewModel.currentScooter.name, scooterViewModel.currentScooter.location)
+            /*buttonStartRide.setOnClickListener {
+                val intent = Intent(this@MainActivity, StartRideActivity::class.java)
+                //val intent = StartRideActivity.newIntent(this@MainActivity, scooterViewModel.currentScooter.name, scooterViewModel.currentScooter.location)
                 startRideLauncher.launch(intent)
             }
 
             buttonUpdateRide.setOnClickListener {
-                val intent = UpdateRideActivity.newIntent(this@MainActivity, scooterViewModel.currentScooter.name)
+                val intent = UpdateRideActivity.newIntent(this@MainActivity, scooterViewModel.scooterName)
                 updateRideLauncher.launch(intent)
-            }
+            }*/
         }
 
         setContentView(mainBinding.root)
     }
 
     private fun showMessage() {
-        Log.d(TAG, scooterViewModel.currentScooter.toString())
+        Log.d(TAG, scooterViewModel.scooterString())
     }
 }

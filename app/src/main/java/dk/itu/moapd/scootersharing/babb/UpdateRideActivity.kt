@@ -32,7 +32,7 @@ class UpdateRideActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         updateRideBinding = ActivityUpdateRideBinding.inflate(layoutInflater)
 
-        scooter.name = intent.getStringExtra(EXTRA_START_SCOOTER_NAME).toString()
+        //scooter.name = intent.getStringExtra(EXTRA_START_SCOOTER_NAME).toString()
 
         with (updateRideBinding) {
 

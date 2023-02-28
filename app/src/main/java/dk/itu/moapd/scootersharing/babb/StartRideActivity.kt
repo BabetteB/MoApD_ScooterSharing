@@ -20,12 +20,12 @@ class StartRideActivity : AppCompatActivity() {
     companion object{
         private val TAG = StartRideActivity::class.qualifiedName
 
-        fun newIntent (packageContext: Context, scooterName: String, scooterLocation: String) : Intent {
+        /*fun newIntent (packageContext: Context, scooterName: String, scooterLocation: String) : Intent {
             return Intent(packageContext, StartRideActivity::class.java).apply {
                 putExtra(EXTRA_START_SCOOTER_NAME, scooterName)
                 putExtra(EXTRA_START_SCOOTER_LOCATION, scooterLocation)
             }
-        }
+        }*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +36,9 @@ class StartRideActivity : AppCompatActivity() {
         with (startRideBinding) {
             buttonStartRide.setOnClickListener {
                 if (informationInput.nameInput.text.isNotEmpty() && informationInput.locationInput.text.isNotEmpty()) {
+
                     var name = informationInput.nameInput.text.toString().trim()
-                    scooter.name = name
+                    //scooter.name = name
 
                     var location = informationInput.locationInput.text.toString().trim()
                     scooter.location = location
@@ -49,9 +50,8 @@ class StartRideActivity : AppCompatActivity() {
                         scooter.toString(),
                         Snackbar.LENGTH_SHORT
                     ).show()
+
                     showMessage()
-
-
                 }
             }
         }
