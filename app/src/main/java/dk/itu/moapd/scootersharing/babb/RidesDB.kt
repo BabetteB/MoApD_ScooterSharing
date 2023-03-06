@@ -41,6 +41,14 @@ class RidesDB private constructor(context: Context) {
         rides.add(scooter)
     }
 
+    fun updateScooterLocation(scooterName : String, location: String){
+        rides.forEach{ s ->
+            if (s.name.equals(scooterName)){
+                s.location = location
+            }
+        }
+    }
+
     fun updateCurrentScooter(location: String) {
         rides.last().location = location
     }

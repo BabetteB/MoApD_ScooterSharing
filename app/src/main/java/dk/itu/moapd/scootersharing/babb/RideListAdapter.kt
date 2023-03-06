@@ -23,8 +23,7 @@ class RideHolder(
  }
 
 class RideListAdapter (private val rides: List<Scooter>,
-                       private val onRideClicked: (scooterId: String) -> Unit /*,
-                       private val onNewRideClicked: () -> Unit*/
+                       private val onRideClicked: (scooterId: String) -> Unit
 )    : RecyclerView.Adapter<RideHolder>() {
 
 

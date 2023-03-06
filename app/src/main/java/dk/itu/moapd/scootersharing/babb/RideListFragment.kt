@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,14 +44,35 @@ class RideListFragment : Fragment() {
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
         val rides = ridesDB
+
         val adapter = RideListAdapter(rides.getRidesList()) {scooterId ->
             findNavController().navigate(
                 RideListFragmentDirections.showUpdateRide(scooterId)
             )
         }
+
         binding.rideRecyclerView.adapter = adapter
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setFragmentResultListener(
+            StartRideFragment.REQUEST_KEY_NEW_SCOOTER
+        ) {
+            _, bundle ->
+            val newScooter = bundle.getSerializable(StartRideFragment.BUNDLE_KEY_NEW_SCOOTER) as Scooter
+            ridesDB.addScooter(newScooter)
+        }
+
+        setFragmentResultListener(
+            UpdateRideFragment.REQUEST_KEY_UPDATED_SCOOTER_LOCATION
+        ) {
+                _, bundle ->
+            val newLocation = bundle.getSerializable(UpdateRideFragment.BUNDLE_KEY_UPDATED_SCOOTER_LOCATION) as Scooter
+            ridesDB.updateScooterLocation(newLocation.name, newLocation.location)
+        }
     }
 
     override fun onDestroyView() {
@@ -64,7 +86,7 @@ class RideListFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return  when (item.itemId) {
+        return when (item.itemId) {
             R.id.new_ride -> {
                 showNewRide()
                 true
@@ -75,11 +97,6 @@ class RideListFragment : Fragment() {
 
     private fun showNewRide() {
         viewLifecycleOwner.lifecycleScope.launch {
-            val newScooter = Scooter (
-                name = "",
-                location = ""
-            )
-            ridesDB.addScooter(newScooter)
             findNavController().navigate(
                 RideListFragmentDirections.showStartRide()
             )

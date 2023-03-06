@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dk.itu.moapd.scootersharing.babb.databinding.FragmentStartRideBinding
@@ -24,6 +26,8 @@ class StartRideFragment : Fragment() {
 
     companion object{
         private val TAG = StartRideFragment::class.qualifiedName
+        const val REQUEST_KEY_NEW_SCOOTER = "REQUEST_KEY_NEW_SCOOTER"
+        const val BUNDLE_KEY_NEW_SCOOTER = "BUNDLE_KEY_NEW_SCOOTER"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +53,8 @@ class StartRideFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val navController = findNavController()
+
         with(binding) {
             buttonStartRide.setOnClickListener {
                 Toast.makeText(
@@ -56,13 +62,20 @@ class StartRideFragment : Fragment() {
                     "Scooter created",
                     Toast.LENGTH_SHORT
                 ).show()
-                //findNavController().popBackStack(scooter)
+                setFragmentResult(REQUEST_KEY_NEW_SCOOTER, bundleOf(BUNDLE_KEY_NEW_SCOOTER to createNewScooter()))
+                navController.popBackStack()
             }
 
             buttonBack.setOnClickListener {
-                findNavController().popBackStack()
+                navController.popBackStack()
             }
         }
+    }
+
+    private fun createNewScooter() : Scooter {
+        val name = binding.informationInput.nameInput.text.toString().trim()
+        val location = binding.informationInput.locationInput.text.toString().trim()
+        return Scooter(name, location)
     }
 
 
