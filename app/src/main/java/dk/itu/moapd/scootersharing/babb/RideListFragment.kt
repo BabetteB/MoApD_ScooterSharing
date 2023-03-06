@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +22,10 @@ class RideListFragment : Fragment() {
             "Cannot access binding."
         }
 
+    private val viewModel : ScooterViewModel by lazy {
+        ViewModelProvider(this)[ScooterViewModel::class.java]
+    }
+
     companion object {
         lateinit var ridesDB : RidesDB
     }
@@ -30,7 +35,7 @@ class RideListFragment : Fragment() {
         ridesDB = RidesDB.get(this.requireActivity())
 
         setHasOptionsMenu(true)
-
+        Log.d(TAG, "Got ViewModel for list of scooters: $viewModel")
         Log.d(TAG, "Total rides: ${ridesDB.getRidesList().size}")
     }
 
@@ -40,12 +45,9 @@ class RideListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
-
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val rides = ridesDB
-
-        val adapter = RideListAdapter(rides.getRidesList()) {scooterId ->
+        val adapter = RideListAdapter(ridesDB.getRidesList()) {scooterId ->
             findNavController().navigate(
                 RideListFragmentDirections.showUpdateRide(scooterId)
             )
@@ -58,6 +60,7 @@ class RideListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         setFragmentResultListener(
             StartRideFragment.REQUEST_KEY_NEW_SCOOTER
         ) {

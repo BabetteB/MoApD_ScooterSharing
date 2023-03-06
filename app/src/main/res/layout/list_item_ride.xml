@@ -57,12 +57,12 @@
                 android:textColor="?android:attr/textColorSecondary"
             />
             <TextView
-                android:id="@+id/scooter_tisse"
+                android:id="@+id/scooter_last_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="16sp"
-                android:text="tisse"
+                android:text="@string/scooter_last_update"
                 android:textAppearance="?attr/textAppearanceBodyMedium"
                 android:textColor="?android:attr/textColorSecondary"
             />

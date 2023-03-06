@@ -26,6 +26,10 @@ package dk.itu.moapd.scootersharing.babb
 
 import java.io.Serializable
 import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.Calendar
+import java.util.Date
 
 
 /**
@@ -41,4 +45,4 @@ data class Scooter (
     val name : String,
     var location : String,
     var createdAt : Long = 0L,
-    val timeStamp : Long = System.currentTimeMillis() ) : Serializable
+    var lastUpdateTimeStamp : Date = Calendar.getInstance().time ) : Serializable
