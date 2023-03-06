@@ -22,8 +22,6 @@ class StartRideFragment : Fragment() {
             "Oh no I died"
         }
 
-    private lateinit var scooter: Scooter
-
     companion object{
         private val TAG = StartRideFragment::class.qualifiedName
         const val REQUEST_KEY_NEW_SCOOTER = "REQUEST_KEY_NEW_SCOOTER"
@@ -33,11 +31,6 @@ class StartRideFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        scooter = Scooter(
-            name = "",
-            location = ""
-        )
-
         Log.d(TAG, "fragment created")
     }
 
@@ -45,8 +38,10 @@ class StartRideFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentStartRideBinding.inflate(layoutInflater, container, false)
+
+        // return binding.root to make sure the binding is not null
         return binding.root
     }
 

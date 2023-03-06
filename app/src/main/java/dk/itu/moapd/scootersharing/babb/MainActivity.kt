@@ -54,7 +54,4 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinding.root)
     }
 
-    private fun showMessage() {
-        Log.d(TAG, scooterViewModel.scooterString())
-    }
 }
