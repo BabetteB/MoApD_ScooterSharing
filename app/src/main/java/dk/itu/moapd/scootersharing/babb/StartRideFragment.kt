@@ -56,13 +56,11 @@ class StartRideFragment : Fragment() {
                     "Scooter created",
                     Toast.LENGTH_SHORT
                 ).show()
-
+                //findNavController().popBackStack(scooter)
             }
 
             buttonBack.setOnClickListener {
-                findNavController().navigate(
-                    StartRideFragmentDirections.startGoBack()
-                )
+                findNavController().popBackStack()
             }
         }
     }

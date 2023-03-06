@@ -32,13 +32,21 @@
         android:label="StartRideFragment"
         tools:layout="@layout/fragment_start_ride">
         <action
-            android:id="@+id/start_go_back"
-            app:destination="@id/rideListFragment" />
-        <action
             android:id="@+id/start_save_new_ride"
             app:destination="@id/rideListFragment" />
-        <argument
-            android:name="new_ride"
-            app:argType="dk.itu.moapd.scootersharing.babb.Scooter" />
     </fragment>
 </navigation>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
