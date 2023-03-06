@@ -27,34 +27,53 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
+import dk.itu.moapd.scootersharing.babb.databinding.FragmentMainBinding
 
-private const val TAG = "MainActivity"
+private const val TAG = "MainFragment"
 
-class MainActivity : AppCompatActivity() {
+class MainFragment : Fragment() {
+
+    private lateinit var scooter: Scooter
 
     // Binding(s)
-    private lateinit var mainBinding : ActivityMainBinding
-
-    private val scooterViewModel : ScooterViewModel by viewModels()
-
-    // set of private constants used in this class
-    companion object {
-        private val TAG = MainActivity::class.qualifiedName
-    }
+    private var _binding : FragmentMainBinding? = null
+    private val binding
+        get() = checkNotNull(_binding) {
+            "Oh no I died"
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "created ScooterViewModel: $scooterViewModel")
 
-        mainBinding = ActivityMainBinding.inflate(layoutInflater)
-
-        setContentView(mainBinding.root)
+        scooter = Scooter(
+            name = "AAR 001",
+            location = "lufthavnen"
+        )
     }
 
-    private fun showMessage() {
-        Log.d(TAG, scooterViewModel.scooterString())
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            fragmentContainer
+        }
+    }
+
 }

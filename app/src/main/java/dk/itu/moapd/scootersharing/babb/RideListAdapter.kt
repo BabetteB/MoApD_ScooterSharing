@@ -4,15 +4,30 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import dk.itu.moapd.scootersharing.babb.databinding.ListItemRideBinding
 
 class RideHolder(
-    val binding: ListItemRideBinding
- ) : RecyclerView.ViewHolder(binding.root){}
+    private val binding: ListItemRideBinding
+ ) : RecyclerView.ViewHolder(binding.root){
+     fun bind (scooter : Scooter, onRideClicked: (scooterId: String) -> Unit){
+         binding.scooterName.text = scooter.name
+         binding.scooterLocation.text = scooter.location
 
-class RideListAdapter (private val rides: List<Scooter>)
-    : RecyclerView.Adapter<RideHolder>() {
+         binding.cardView.setOnClickListener {
+             onRideClicked(scooter.name)
+         }
+
+     }
+ }
+
+class RideListAdapter (private val rides: List<Scooter>,
+                       private val onRideClicked: (scooterId: String) -> Unit /*,
+                       private val onNewRideClicked: () -> Unit*/
+)    : RecyclerView.Adapter<RideHolder>() {
+
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,10 +40,7 @@ class RideListAdapter (private val rides: List<Scooter>)
 
     override fun onBindViewHolder(holder: RideHolder, position: Int) {
         val ride = rides[position]
-        holder.apply {
-            binding.scooterName.text = ride.name
-            binding.scooterLocation.text = ride.location
-        }
+        holder.bind(ride, onRideClicked)
     }
     override fun getItemCount() = rides.size
 

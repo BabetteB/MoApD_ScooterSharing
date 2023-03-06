@@ -37,6 +37,9 @@ class RidesDB private constructor(context: Context) {
     fun addScooter(name: String, location: String) {
         rides.add(Scooter(name, location))
     }
+    fun addScooter(scooter: Scooter) {
+        rides.add(scooter)
+    }
 
     fun updateCurrentScooter(location: String) {
         rides.last().location = location
