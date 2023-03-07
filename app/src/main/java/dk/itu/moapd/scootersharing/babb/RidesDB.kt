@@ -1,7 +1,7 @@
 package dk.itu.moapd.scootersharing.babb
 
 import android.content.Context
-import java.util.Random
+import java.util.*
 import kotlin.collections.ArrayList
 
 class RidesDB private constructor(context: Context) {
@@ -37,9 +37,23 @@ class RidesDB private constructor(context: Context) {
     fun addScooter(name: String, location: String) {
         rides.add(Scooter(name, location))
     }
+    fun addScooter(scooter: Scooter) {
+        rides.add(scooter)
+    }
+
+    fun updateScooterLocation(scooterName : String, location: String){
+        rides.forEach{ s ->
+            if (s.name.equals(scooterName)){
+                s.location = location
+                s.lastUpdateTimeStamp = Calendar.getInstance().time
+            }
+        }
+    }
 
     fun updateCurrentScooter(location: String) {
-        rides.last().location = location
+        var s = rides.last()
+        s.location = location
+        s.lastUpdateTimeStamp = Calendar.getInstance().time
     }
 
     fun getCurrentScooter(): Scooter {

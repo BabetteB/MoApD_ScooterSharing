@@ -22,32 +22,49 @@ SOFTWARE.*/
 
 package dk.itu.moapd.scootersharing.babb
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
-import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import dk.itu.moapd.scootersharing.babb.databinding.FragmentMainBinding
 
 
-class MainActivity : AppCompatActivity() {
+class MainFragment : Fragment() {
+
+    private lateinit var scooter: Scooter
 
     // Binding(s)
-    private lateinit var mainBinding : ActivityMainBinding
-
-    private val scooterViewModel : ScooterViewModel by viewModels()
-
-    // set of private constants used in this class
-    companion object {
-        private val TAG = MainActivity::class.qualifiedName
-    }
+    private var _binding : FragmentMainBinding? = null
+    private val binding
+        get() = checkNotNull(_binding) {
+            "Oh no I died"
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "created ScooterViewModel: $scooterViewModel")
 
-        mainBinding = ActivityMainBinding.inflate(layoutInflater)
+        scooter = Scooter(
+            name = "",
+            location = ""
+        )
+    }
 
-        setContentView(mainBinding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.apply {
+            fragmentContainer
+        }
     }
 
 }
