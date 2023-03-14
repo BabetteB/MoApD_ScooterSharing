@@ -38,6 +38,11 @@ class RidesDB private constructor(context: Context) {
         rides.remove(scooter)
     }
 
+    fun deleteScooter(scooterId : String) {
+        var scooter = getScooter(scooterId)
+        rides.remove(scooter)
+    }
+
     fun addScooter(name: String, location: String) {
         rides.add(Scooter(name, location))
     }
@@ -45,13 +50,19 @@ class RidesDB private constructor(context: Context) {
         rides.add(scooter)
     }
 
-    fun updateScooterLocation(scooterName : String, location: String){
+    private fun getScooter (scooterName : String) : Scooter {
         rides.forEach{ s ->
             if (s.name.equals(scooterName)){
-                s.location = location
-                s.lastUpdateTimeStamp = Calendar.getInstance().time
+                return s
             }
         }
+        error("No scooter has that id")
+    }
+
+    fun updateScooterLocation(scooterName : String, location: String){
+        var s = getScooter(scooterName)
+        s.location = location
+        s.lastUpdateTimeStamp = Calendar.getInstance().time
     }
 
     /**

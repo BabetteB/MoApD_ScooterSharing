@@ -3,12 +3,14 @@ package dk.itu.moapd.scootersharing.babb
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.babb.databinding.FragmentRideListBinding
 import kotlinx.coroutines.launch
 
@@ -42,11 +44,19 @@ class RideListFragment : Fragment(), ItemClickListener {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val adapter = RideListAdapter(ridesDB.getRidesList(), this)
+        val adapter = makeAdapter(ridesDB.getRidesList(), this)
 
-        binding.rideRecyclerView.adapter = adapter
+        updateBinding(adapter)
 
         return binding.root
+    }
+
+    private fun makeAdapter(list : List<Scooter>, itemClickListener: ItemClickListener) : RideListAdapter {
+        return RideListAdapter(list, itemClickListener)
+    }
+
+    private fun updateBinding(adapter : RideListAdapter) {
+        binding.rideRecyclerView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,7 +116,15 @@ class RideListFragment : Fragment(), ItemClickListener {
     }
 
     override fun onRideLongClicked(scooterId: String) {
-        TODO("Not yet implemented")
+        ridesDB.deleteScooter(scooterId)
+        Toast.makeText(
+            context,
+            "$scooterId deleted",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        var adapter = makeAdapter(ridesDB.getRidesList(), this)
+        updateBinding(adapter)
     }
 
 }
