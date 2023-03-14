@@ -6,25 +6,32 @@ import androidx.recyclerview.widget.RecyclerView
 import dk.itu.moapd.scootersharing.babb.databinding.ListItemRideBinding
 
 class RideHolder(
-    private val binding: ListItemRideBinding
+    private val binding: ListItemRideBinding,
+    private val itemClickListener: ItemClickListener
  ) : RecyclerView.ViewHolder(binding.root){
-     fun bind (scooter : Scooter, onRideClicked: (scooterId: String) -> Unit){
-         binding.scooterName.text = scooter.name
-         binding.scooterLocation.text = scooter.location
-         binding.scooterLastUpdate.text =scooter.lastUpdateTimeStamp.toString()
+     fun bind (scooter : Scooter) {
+         with (binding) {
+             scooterName.text = scooter.name
+             scooterLocation.text = scooter.location
+             scooterLastUpdate.text = scooter.lastUpdateTimeStamp.toString()
 
-         binding.cardView.setOnClickListener {
-             onRideClicked(scooter.name)
+             cardView.setOnClickListener {
+                 itemClickListener.onRideClicked(scooter.name)
+             }
+
+             cardView.setOnLongClickListener {
+                 itemClickListener.onRideLongClicked(scooter.name)
+                 true
+             }
+
          }
 
      }
  }
 
 class RideListAdapter (private val rides: List<Scooter>,
-                       private val onRideClicked: (scooterId: String) -> Unit
+                       private val itemClickListener: ItemClickListener
 )    : RecyclerView.Adapter<RideHolder>() {
-
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,12 +39,12 @@ class RideListAdapter (private val rides: List<Scooter>,
     ) : RideHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemRideBinding.inflate(inflater, parent, false)
-        return RideHolder(binding)
+        return RideHolder(binding, itemClickListener)
     }
 
     override fun onBindViewHolder(holder: RideHolder, position: Int) {
         val ride = rides[position]
-        holder.bind(ride, onRideClicked)
+        holder.bind(ride)
     }
     override fun getItemCount() = rides.size
 

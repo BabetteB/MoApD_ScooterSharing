@@ -41,7 +41,6 @@ class StartRideFragment : Fragment() {
     ): View {
         _binding = FragmentStartRideBinding.inflate(layoutInflater, container, false)
 
-        // return binding.root to make sure the binding is not null
         return binding.root
     }
 

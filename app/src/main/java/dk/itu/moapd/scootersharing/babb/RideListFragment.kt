@@ -3,28 +3,26 @@ package dk.itu.moapd.scootersharing.babb
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import dk.itu.moapd.scootersharing.babb.databinding.FragmentRideListBinding
 import kotlinx.coroutines.launch
 
 private const val TAG = "RideListFragment"
 
-class RideListFragment : Fragment() {
+class RideListFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentRideListBinding? = null
     private val binding
         get() = checkNotNull(_binding){
             "Cannot access binding."
         }
-
-    private val viewModel : ScooterViewModel by lazy {
-        ViewModelProvider(this)[ScooterViewModel::class.java]
-    }
 
     companion object {
         lateinit var ridesDB : RidesDB
@@ -35,7 +33,6 @@ class RideListFragment : Fragment() {
         ridesDB = RidesDB.get(this.requireActivity())
 
         setHasOptionsMenu(true)
-        Log.d(TAG, "Got ViewModel for list of scooters: $viewModel")
         Log.d(TAG, "Total rides: ${ridesDB.getRidesList().size}")
     }
 
@@ -47,15 +44,19 @@ class RideListFragment : Fragment() {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val adapter = RideListAdapter(ridesDB.getRidesList()) {scooterId ->
-            findNavController().navigate(
-                RideListFragmentDirections.showUpdateRide(scooterId)
-            )
-        }
+        val adapter = makeAdapter(ridesDB.getRidesList(), this)
 
-        binding.rideRecyclerView.adapter = adapter
+        updateBinding(adapter)
 
         return binding.root
+    }
+
+    private fun makeAdapter(list : List<Scooter>, itemClickListener: ItemClickListener) : RideListAdapter {
+        return RideListAdapter(list, itemClickListener)
+    }
+
+    private fun updateBinding(adapter : RideListAdapter) {
+        binding.rideRecyclerView.adapter = adapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,6 +77,8 @@ class RideListFragment : Fragment() {
             val newLocation = bundle.getSerializable(UpdateRideFragment.BUNDLE_KEY_UPDATED_SCOOTER_LOCATION) as Scooter
             ridesDB.updateScooterLocation(newLocation.name, newLocation.location)
         }
+
+
     }
 
     override fun onDestroyView() {
@@ -104,6 +107,24 @@ class RideListFragment : Fragment() {
                 RideListFragmentDirections.showStartRide()
             )
         }
+    }
+
+    override fun onRideClicked(scooterId: String) {
+        findNavController().navigate(
+            RideListFragmentDirections.showUpdateRide(scooterId)
+        )
+    }
+
+    override fun onRideLongClicked(scooterId: String) {
+        ridesDB.deleteScooter(scooterId)
+        Toast.makeText(
+            context,
+            "$scooterId deleted",
+            Toast.LENGTH_SHORT
+        ).show()
+
+        var adapter = makeAdapter(ridesDB.getRidesList(), this)
+        updateBinding(adapter)
     }
 
 }

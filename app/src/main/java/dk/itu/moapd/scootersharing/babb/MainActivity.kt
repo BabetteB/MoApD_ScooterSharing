@@ -24,26 +24,25 @@ package dk.itu.moapd.scootersharing.babb
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
 import dk.itu.moapd.scootersharing.babb.databinding.ActivityMainBinding
 
 
+/**
+ * The MainActivity is the sole activity, used for storing the MainFragment
+ */
 class MainActivity : AppCompatActivity() {
 
-    // Binding(s)
+    /**
+     * Binding view and activity
+     */
     private lateinit var mainBinding : ActivityMainBinding
 
-    private val scooterViewModel : ScooterViewModel by viewModels()
 
-    // set of private constants used in this class
-    companion object {
-        private val TAG = MainActivity::class.qualifiedName
-    }
-
+    /**
+     * upon creating the instance of main activity, inflate the binding (see activity_main.xml)
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "created ScooterViewModel: $scooterViewModel")
 
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
 
