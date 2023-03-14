@@ -34,6 +34,10 @@ class RidesDB private constructor(context: Context) {
         return rides
     }
 
+    fun deleteScooter(scooter : Scooter) {
+        rides.remove(scooter)
+    }
+
     fun addScooter(name: String, location: String) {
         rides.add(Scooter(name, location))
     }
@@ -48,20 +52,6 @@ class RidesDB private constructor(context: Context) {
                 s.lastUpdateTimeStamp = Calendar.getInstance().time
             }
         }
-    }
-
-    fun updateCurrentScooter(location: String) {
-        var s = rides.last()
-        s.location = location
-        s.lastUpdateTimeStamp = Calendar.getInstance().time
-    }
-
-    fun getCurrentScooter(): Scooter {
-        return rides.last()
-    }
-
-    fun getCurrentScooterInfo(): String {
-        return rides.last().toString()
     }
 
     /**

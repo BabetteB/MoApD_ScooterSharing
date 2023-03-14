@@ -14,17 +14,13 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "RideListFragment"
 
-class RideListFragment : Fragment() {
+class RideListFragment : Fragment(), ItemClickListener {
 
     private var _binding: FragmentRideListBinding? = null
     private val binding
         get() = checkNotNull(_binding){
             "Cannot access binding."
         }
-
-    private val viewModel : ScooterViewModel by lazy {
-        ViewModelProvider(this)[ScooterViewModel::class.java]
-    }
 
     companion object {
         lateinit var ridesDB : RidesDB
@@ -35,7 +31,6 @@ class RideListFragment : Fragment() {
         ridesDB = RidesDB.get(this.requireActivity())
 
         setHasOptionsMenu(true)
-        Log.d(TAG, "Got ViewModel for list of scooters: $viewModel")
         Log.d(TAG, "Total rides: ${ridesDB.getRidesList().size}")
     }
 
@@ -47,11 +42,7 @@ class RideListFragment : Fragment() {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val adapter = RideListAdapter(ridesDB.getRidesList()) {scooterId ->
-            findNavController().navigate(
-                RideListFragmentDirections.showUpdateRide(scooterId)
-            )
-        }
+        val adapter = RideListAdapter(ridesDB.getRidesList(), this)
 
         binding.rideRecyclerView.adapter = adapter
 
@@ -76,6 +67,8 @@ class RideListFragment : Fragment() {
             val newLocation = bundle.getSerializable(UpdateRideFragment.BUNDLE_KEY_UPDATED_SCOOTER_LOCATION) as Scooter
             ridesDB.updateScooterLocation(newLocation.name, newLocation.location)
         }
+
+
     }
 
     override fun onDestroyView() {
@@ -104,6 +97,16 @@ class RideListFragment : Fragment() {
                 RideListFragmentDirections.showStartRide()
             )
         }
+    }
+
+    override fun onRideClicked(scooterId: String) {
+        findNavController().navigate(
+            RideListFragmentDirections.showUpdateRide(scooterId)
+        )
+    }
+
+    override fun onRideLongClicked(scooterId: String) {
+        TODO("Not yet implemented")
     }
 
 }
