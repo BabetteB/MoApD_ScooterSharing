@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "585564825637",
+    "project_id": "scooter-sharing-b3fdd",
+    "storage_bucket": "scooter-sharing-b3fdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585564825637:android:d73c8dcf444da56b79b7cc",
+        "android_client_info": {
+          "package_name": "dk.itu.moapd.scootersharing.babb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585564825637-5h4ipr29tpgkpqi1a6cq92qfp0fh12ve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYPSFejJUgEF5ouHTvukHr3Dbg4wPx_ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585564825637-5h4ipr29tpgkpqi1a6cq92qfp0fh12ve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package dk.itu.moapd.scootersharing.babb
+package dk.itu.moapd.scootersharing.babb.model
 
 import android.content.Context
 import java.util.*

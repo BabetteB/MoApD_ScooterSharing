@@ -1,20 +1,20 @@
-package dk.itu.moapd.scootersharing.babb
+package dk.itu.moapd.scootersharing.babb.viewmodel
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import dk.itu.moapd.scootersharing.babb.*
+import dk.itu.moapd.scootersharing.babb.model.ItemClickListener
+import dk.itu.moapd.scootersharing.babb.RideListFragmentDirections
 import dk.itu.moapd.scootersharing.babb.databinding.FragmentRideListBinding
+import dk.itu.moapd.scootersharing.babb.model.RidesDB
+import dk.itu.moapd.scootersharing.babb.model.Scooter
 import kotlinx.coroutines.launch
-
-private const val TAG = "RideListFragment"
 
 class RideListFragment : Fragment(), ItemClickListener {
 
@@ -33,14 +33,13 @@ class RideListFragment : Fragment(), ItemClickListener {
         ridesDB = RidesDB.get(this.requireActivity())
 
         setHasOptionsMenu(true)
-        Log.d(TAG, "Total rides: ${ridesDB.getRidesList().size}")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRideListBinding.inflate(inflater, container, false)
         binding.rideRecyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -59,6 +58,7 @@ class RideListFragment : Fragment(), ItemClickListener {
         binding.rideRecyclerView.adapter = adapter
     }
 
+    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,6 +116,21 @@ class RideListFragment : Fragment(), ItemClickListener {
     }
 
     override fun onRideLongClicked(scooterId: String) {
+        findNavController().navigate(
+            RideListFragmentDirections.deleteScooterDialog(scooterId)
+        )
+
+        setFragmentResultListener(
+            DeleteScooterFragment.REQUEST_KEY_ANSWER
+        ) { _, bundle ->
+            val result = bundle.getSerializable(DeleteScooterFragment.BUNDLE_KEY_ANSWER) as Boolean
+            if (result) {
+                deleteScooter(scooterId)
+            }
+        }
+    }
+
+    private fun deleteScooter(scooterId: String){
         ridesDB.deleteScooter(scooterId)
         Toast.makeText(
             context,
@@ -123,8 +138,9 @@ class RideListFragment : Fragment(), ItemClickListener {
             Toast.LENGTH_SHORT
         ).show()
 
-        var adapter = makeAdapter(ridesDB.getRidesList(), this)
+        val adapter = makeAdapter(ridesDB.getRidesList(), this)
         updateBinding(adapter)
     }
+
 
 }

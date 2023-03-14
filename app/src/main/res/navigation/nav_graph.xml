@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/rideListFragment"
-        android:name="dk.itu.moapd.scootersharing.babb.RideListFragment"
+        android:name="dk.itu.moapd.scootersharing.babb.viewmodel.RideListFragment"
         android:label="RideListFragment"
         tools:layout="@layout/fragment_ride_list">
         <action
@@ -16,10 +16,13 @@
         <action
             android:id="@+id/show_start_ride"
             app:destination="@id/startRideFragment" />
+        <action
+            android:id="@+id/delete_scooter_dialog"
+            app:destination="@id/deleteScooterFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateRideFragment"
-        android:name="dk.itu.moapd.scootersharing.babb.UpdateRideFragment"
+        android:name="dk.itu.moapd.scootersharing.babb.viewmodel.UpdateRideFragment"
         android:label="UpdateRideFragment"
         tools:layout="@layout/fragment_update_ride">
         <argument
@@ -28,10 +31,19 @@
     </fragment>
     <fragment
         android:id="@+id/startRideFragment"
-        android:name="dk.itu.moapd.scootersharing.babb.StartRideFragment"
+        android:name="dk.itu.moapd.scootersharing.babb.viewmodel.StartRideFragment"
         android:label="StartRideFragment"
         tools:layout="@layout/fragment_start_ride">
     </fragment>
+    <dialog
+        android:id="@+id/deleteScooterFragment"
+        android:name="dk.itu.moapd.scootersharing.babb.viewmodel.DeleteScooterFragment"
+        android:label="DeleteScooterFragment" >
+        <argument
+            android:name="deletedScooterId"
+            app:argType="string" />
+    </dialog>
+
 </navigation>
 
 

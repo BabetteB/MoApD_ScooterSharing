@@ -1,4 +1,4 @@
-package dk.itu.moapd.scootersharing.babb
+package dk.itu.moapd.scootersharing.babb.viewmodel
 
 import android.graphics.Color
 import android.os.Bundle
@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dk.itu.moapd.scootersharing.babb.model.Scooter
+import dk.itu.moapd.scootersharing.babb.UpdateRideFragmentArgs
 import dk.itu.moapd.scootersharing.babb.databinding.FragmentUpdateRideBinding
 
 class UpdateRideFragment : Fragment() {
@@ -66,7 +68,8 @@ class UpdateRideFragment : Fragment() {
                 val newLocation = checkNotNull(informationInput.locationInput.text.toString().trim())
                 setFragmentResult(
                     REQUEST_KEY_UPDATED_SCOOTER_LOCATION, bundleOf(
-                        BUNDLE_KEY_UPDATED_SCOOTER_LOCATION to Scooter(args.rideName, newLocation))
+                        BUNDLE_KEY_UPDATED_SCOOTER_LOCATION to Scooter(args.rideName, newLocation)
+                    )
                 )
                 navController.popBackStack()
             }

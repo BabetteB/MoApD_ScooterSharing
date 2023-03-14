@@ -9,6 +9,6 @@
     android:layout_height="match_parent"
     app:defaultNavHost="true"
     app:navGraph="@navigation/nav_graph"
-    tools:context=".MainFragment"
+    tools:context=".viewmodel.MainFragment"
     tools:layout="@layout/fragment_ride_list" />
 

@@ -22,7 +22,7 @@
  * SOFTWARE.
  *
  */
-package dk.itu.moapd.scootersharing.babb
+package dk.itu.moapd.scootersharing.babb.model
 
 import java.io.Serializable
 import java.sql.Timestamp

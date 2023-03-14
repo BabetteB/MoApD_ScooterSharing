@@ -3,7 +3,9 @@ package dk.itu.moapd.scootersharing.babb
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import dk.itu.moapd.scootersharing.babb.model.ItemClickListener
 import dk.itu.moapd.scootersharing.babb.databinding.ListItemRideBinding
+import dk.itu.moapd.scootersharing.babb.model.Scooter
 
 class RideHolder(
     private val binding: ListItemRideBinding,
